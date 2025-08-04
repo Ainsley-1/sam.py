@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Calculator Demo</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        .terminal {
+            background-color: #000000;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .prompt {
+            color: #00ff00;
+        }
+        .input {
+            color: #ffff00;
+        }
+        .output {
+            color: #ffffff;
+        }
+        .error {
+            color: #ff4444;
+        }
+        .calculator {
+            background: #2d2d2d;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        h1, h2 {
+            color: #4CAF50;
+        }
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #333;
+            border-radius: 8px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .interactive {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        input, select {
+            background: #444;
+            color: white;
+            border: 1px solid #666;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        .result-display {
+            background: #001100;
+            border: 1px solid #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+   
+        
+
+    <div class="interactive">
+        <h2>🧮 Interactive Calculator (Same Logic)</h2>
+        <p>This uses the exact same Python logic as your console program:</p>
+        
+        <div>
+            <label>First Number:</label>
+            <input type="number" id="num1" step="any" placeholder="Enter first number">
+        </div>
+        
+        <div>
+            <label>Operation:</label>
+            <select id="operation">
+                <option value="">Select operation</option>
+                <option value="+">+ (Addition)</option>
+                <option value="-">- (Subtraction)</option>
+                <option value="*">* (Multiplication)</option>
+                <option value="/">/ (Division)</option>
+            </select>
+        </div>
+        
+        <div>
+            <label>Second Number:</label>
+            <input type="number" id="num2" step="any" placeholder="Enter second number">
+        </div>
+        
+        <button onclick="calculate()">Calculate</button>
+        <button onclick="clearAll()">Clear</button>
+        
+        <div id="result" class="result-display" style="display: none;"></div>
+    </div>
+
+    
+    </div>
+
+    <script>
+        // This implements the exact same logic as your Python calculator
+        function calculate() {
+            try {
+                // Get input values (same as Python input())
+                const num1 = parseFloat(document.getElementById('num1').value);
+                const num2 = parseFloat(document.getElementById('num2').value);
+                const operation = document.getElementById('operation').value.trim();
+                
+                const resultDiv = document.getElementById('result');
+                
+                // Check for empty inputs (same as Python ValueError)
+                if (isNaN(num1) || isNaN(num2)) {
+                    resultDiv.innerHTML = '<span class="error">Error: Please enter valid numbers!</span>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                let result;
+                let calculation;
+                
+                // Perform calculation based on operation (exact same logic)
+                if (operation === '+') {
+                    result = num1 + num2;
+                    calculation = `${num1} + ${num2} = ${result}`;
+                } else if (operation === '-') {
+                    result = num1 - num2;
+                    calculation = `${num1} - ${num2} = ${result}`;
+                } else if (operation === '*') {
+                    result = num1 * num2;
+                    calculation = `${num1} * ${num2} = ${result}`;
+                } else if (operation === '/') {
+                    if (num2 !== 0) {
+                        result = num1 / num2;
+                        calculation = `${num1} / ${num2} = ${result}`;
+                    } else {
+                        resultDiv.innerHTML = '<span class="error">Error: Division by zero is not allowed!</span>';
+                        resultDiv.style.display = 'block';
+                        return;
+                    }
+                } else {
+                    resultDiv.innerHTML = '<span class="error">Error: Invalid operation! Please use +, -, *, or /</span>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                // Display result (same as Python print())
+                resultDiv.innerHTML = `<span class="output">${calculation}</span>`;
+                resultDiv.style.display = 'block';
+                
+            } catch (error) {
+                // Handle unexpected errors (same as Python Exception)
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<span class="error">An unexpected error occurred: ${error.message}</span>`;
+                resultDiv.style.display = 'block';
+            }
+        }
+        
+        function clearAll() {
+            document.getElementById('num1').value = '';
+            document.getElementById('num2').value = '';
+            document.getElementById('operation').value = '';
+            document.getElementById('result').style.display = 'none';
+        }
+        
+        // Allow Enter key to calculate
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculate();
+            }
+        });
+    </script>
+</body>
+</html>
